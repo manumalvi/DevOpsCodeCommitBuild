@@ -1,0 +1,25 @@
+# Do not change version. This is the version of aws buildspec, not the version of your buldspec file.
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
+      - aws --version
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling the dist folder
+      - echo Build Finished, Now moving to s3
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - aws s3 sync build/ s3://indexbkt
+# Include only the files required for your application to run.
+# artifacts:
+#   files:
+#     - index.js
+#     - dist/**/*
+#     - request-map.js
+#     - credentials.json
+#     - node_modules/**/*
